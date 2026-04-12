@@ -38,6 +38,8 @@ Setup is automated. You only need to run the setup script **once** (or whenever 
 ### 1. Clone the Suite
 ```bash
 git clone https://github.com/LuiInventions/claude_code_mcp_trading
+```
+```bash
 cd claude_code_mcp_trading
 ```
 
