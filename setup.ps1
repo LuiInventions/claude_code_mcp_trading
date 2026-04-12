@@ -67,6 +67,7 @@ $tvType = "Unknown"
 
 # A. Try Standard Paths & Desktop (Highest Priority for Automation)
 $tvPaths = @(
+    "$env:USERPROFILE\TVPortable",
     "$env:USERPROFILE\Desktop",
     "$env:LocalAppData\Programs\TradingView",
     "$env:ProgramFiles\TradingView",
