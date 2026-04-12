@@ -36,6 +36,9 @@ This suite transforms Claude from a coding assistant into a professional trading
 Log in to your BitUnix account and go to: https://www.bitunix.com/account/apiManagement
 to get your api key, so the agent can acces your trading account
 
+Tradingview mcp uses your local Tradingview (install at: https://de.tradingview.com/desktop/)
+to analyze charts and use strategies
+
 ### Open a PowerShell terminal in the project directory and run:
 
 ### 1. Clone the Suite
