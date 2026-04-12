@@ -19,46 +19,40 @@ $tvSource = $null
 $tvExe = $null
 $tvType = "Unknown"
 
-# A. Try Microsoft Store Version (Get-AppxPackage)
-try {
-    $package = Get-AppxPackage -Name "TradingView.Desktop" -ErrorAction SilentlyContinue
-    if ($package) {
-        $tvSource = $package.InstallLocation
-        $tvExe = Join-Path $tvSource "TradingView.exe"
-        if (Test-Path $tvExe) {
-            $tvType = "Microsoft Store"
-            Write-Host "Found TradingView (Microsoft Store) at: $tvSource" -ForegroundColor Green
-        } else {
-            $tvSource = $null # Reset if exe not found
-        }
-    }
-} catch {}
+# A. Try Standard Paths & Desktop (Highest Priority for Automation)
+$tvPaths = @(
+    "$env:USERPROFILE\Desktop",
+    "$env:LocalAppData\Programs\TradingView",
+    "$env:ProgramFiles\TradingView",
+    "$env:ProgramFiles(x86)\TradingView"
+)
 
-# B. Try Standard Paths
-if (!$tvSource) {
-    $tvPaths = @(
-        "$env:LocalAppData\Programs\TradingView",
-        "$env:ProgramFiles\TradingView",
-        "$env:ProgramFiles(x86)\TradingView",
-        "$env:LocalAppData\Packages\TradingView.Desktop_n534cwy3pjxzj\LocalCache\Roaming\TradingView" # User specific data path
-    )
-    
-    foreach ($p in $tvPaths) {
-        if (Test-Path $p) {
-            $tvSource = $p
-            $exeSearch = Get-ChildItem -Path $p -Filter "TradingView.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
-            if ($exeSearch) {
-                $tvExe = $exeSearch.FullName
-                $tvType = "Standard Installation"
-                Write-Host "Found TradingView (Standard) at: $tvSource" -ForegroundColor Green
-                break
-            }
+foreach ($p in $tvPaths) {
+    if (Test-Path $p) {
+        # Check if the path itself is the EXE
+        if ($p -like "*.exe") {
+            $tvExe = $p
+            $tvSource = Split-Path $p -Parent
+            $tvType = "Standalone EXE"
+            break
+        }
+        # Search for EXE inside
+        $exeSearch = Get-ChildItem -Path $p -Filter "TradingView.exe" -Recurse -Depth 1 -ErrorAction SilentlyContinue | Select-Object -First 1
+        if ($exeSearch) {
+            $tvExe = $exeSearch.FullName
+            $tvSource = $exeSearch.DirectoryName
+            $tvType = "Standard Installation"
+            break
         }
     }
 }
 
-# C. Try PWA / Browser App Shortcuts
-if (!$tvSource) {
+if ($tvExe) {
+    Write-Host "Found TradingView ($tvType) at: $tvExe" -ForegroundColor Green
+}
+
+# B. Try PWA / Browser App Shortcuts
+if (!$tvExe) {
     $shortcutPaths = @(
         "$env:AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Chrome Apps\TradingView*",
         "$env:AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Edge Apps\TradingView*",
@@ -69,7 +63,7 @@ if (!$tvSource) {
         $match = Get-Item $sp -ErrorAction SilentlyContinue
         if ($match) {
             $tvSource = $match.FullName
-            $tvExe = $match.FullName # For PWAs, the "Exe" is the shortcut itself or we launch via browser
+            $tvExe = $match.FullName 
             $tvType = "PWA / Browser App"
             Write-Host "Found TradingView ($tvType) shortcut at: $tvSource" -ForegroundColor Green
             break
@@ -77,7 +71,25 @@ if (!$tvSource) {
     }
 }
 
-if (!$tvSource) {
+# C. Try Microsoft Store Version (Fallback - WARNING: Often blocks CDP port)
+if (!$tvExe) {
+    try {
+        $package = Get-AppxPackage -Name "TradingView.Desktop" -ErrorAction SilentlyContinue
+        if ($package) {
+            $tvSource = $package.InstallLocation
+            $tvExe = Join-Path $tvSource "TradingView.exe"
+            if (Test-Path $tvExe) {
+                $tvType = "Microsoft Store"
+                Write-Host "Found TradingView (Microsoft Store) at: $tvSource" -ForegroundColor Yellow
+                Write-Host "WARNING: Microsoft Store apps often block remote debugging ports (Access Denied). Standalone version is recommended." -ForegroundColor Gray
+            } else {
+                $tvExe = $null
+            }
+        }
+    } catch {}
+}
+
+if (!$tvExe) {
     Write-Host "TradingView not found automatically." -ForegroundColor Magenta
     $tvSource = Read-Host "Please enter the path to TradingView installation folder or EXE"
     if (Test-Path $tvSource) {
@@ -92,7 +104,7 @@ if (!$tvSource) {
 
 $usePortable = "n"
 if ($tvType -eq "Microsoft Store") {
-    Write-Host "Notice: Microsoft Store version detected. Portable mode (copying files) is not recommended due to folder protection." -ForegroundColor Gray
+    Write-Host "Notice: Microsoft Store version detected. Portable mode is not possible and CDP port may be blocked." -ForegroundColor Gray
     $usePortable = "n"
 } else {
     $usePortableInput = Read-Host "Do you want to use a Portable version of TradingView (TVPortable)? (y/n) [y]"
