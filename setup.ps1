@@ -35,13 +35,12 @@ Install-SystemDependency -Name "Python" -Id "Python.Python.3" -Command "python"
 $tvMcpDir = "tradingview-mcp-jackson"
 if (Test-Path $tvMcpDir) {
     if (!(Test-Path "$tvMcpDir\node_modules")) {
-        Write-Host "`nNode.js modules missing for TradingView MCP." -ForegroundColor Magenta
-        $choice = Read-Host "Run 'npm install' now? (y/n) [y]"
-        if ($choice -eq "" -or $choice -eq "y") {
-            Push-Location $tvMcpDir
-            npm install
-            Pop-Location
-        }
+        Write-Host "`nNode.js modules missing for TradingView MCP. Installing automatically..." -ForegroundColor Yellow
+        Push-Location $tvMcpDir
+        npm install
+        Pop-Location
+    } else {
+        Write-Host "Node.js modules found for TradingView MCP." -ForegroundColor Gray
     }
 }
 
@@ -50,11 +49,8 @@ $bitunixDir = "Bitunix-trading-mcp"
 if (Test-Path $bitunixDir) {
     $reqFile = "$bitunixDir\requirements.txt"
     if (Test-Path $reqFile) {
-        Write-Host "`nChecking Python packages for BitUnix MCP..." -ForegroundColor Yellow
-        $choice = Read-Host "Install/Update Python dependencies from requirements.txt? (y/n) [y]"
-        if ($choice -eq "" -or $choice -eq "y") {
-            python -m pip install -r $reqFile
-        }
+        Write-Host "`nInstalling/Updating Python dependencies for BitUnix MCP..." -ForegroundColor Yellow
+        python -m pip install -r $reqFile
     }
 }
 
