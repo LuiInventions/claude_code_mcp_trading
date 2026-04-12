@@ -23,7 +23,7 @@ function Install-SystemDependency {
             }
         }
     } else {
-        Write-Host "Found $Name: $(Get-Command $Command | Select-Object -ExpandProperty Source)" -ForegroundColor Gray
+        Write-Host "Found ${Name}: $(Get-Command $Command | Select-Object -ExpandProperty Source)" -ForegroundColor Gray
     }
 }
 
