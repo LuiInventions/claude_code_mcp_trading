@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__bitunix__get_pending_tpsl_orders",
+      "Bash(python -c ':*)",
+      "Bash(python test_alt_endpoints.py)",
+      "Bash(python test_batch_params.py)",
+      "WebSearch",
+      "WebFetch(domain:www.bitunix.com)",
+      "WebFetch(domain:github.com)"
+    ]
+  }
+}

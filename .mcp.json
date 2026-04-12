@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "tradingview": {
+      "command": "node",
+      "args": [
+        "./tradingview-mcp-jackson/src/server.js"
+      ]
+    },
+    "bitunix": {
+      "command": "node",
+      "args": [
+        "./Bitunix-trading-mcp/index.js"
+      ]
+    }
+  }
+}

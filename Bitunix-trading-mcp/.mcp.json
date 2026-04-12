@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "bitunix": {
+      "command": "python",
+      "args": [
+        "main.py"
+      ],
+      "cwd": "claude-trading-mcp\tradingview-mcp-jackson",
+      "env": {
+        "BITUNIX_API_KEY": "",
+        "BITUNIX_SECRET_KEY": ""
+      }
+    }
+  }
+}

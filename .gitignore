@@ -1,0 +1,16 @@
+# Environment variables
+.env
+Bitunix-trading-mcp/.env
+
+# Local launcher
+start-trading.bat
+
+# User data
+TVPortable/
+node_modules/
+__pycache__/
+
+# Logs and scratch
+*.log
+safety-check-log.json
+scratch/
