@@ -33,6 +33,9 @@ This suite transforms Claude from a coding assistant into a professional trading
 
 ## 🚀 Installation & Setup
 
+Log in to your BitUnix account and go to: https://www.bitunix.com/account/apiManagement
+to get your api key, so the agent can acces your trading account
+
 ### Open a PowerShell terminal in the project directory and run:
 
 ### 1. Clone the Suite
