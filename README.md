@@ -32,20 +32,19 @@ This suite transforms Claude from a coding assistant into a professional trading
 ---
 
 ## 🚀 Installation & Setup
-*make sure to use powershell not cmd
-Setup is automated. You only need to run the setup script **once** (or whenever you want to change your API keys or paths).
+
+### Open a PowerShell terminal in the project directory and run:
 
 ### 1. Clone the Suite
-```bash
+```powershell
 git clone https://github.com/LuiInventions/claude_code_mcp_trading
 ```
 Go to main Folder
-```bash
+```powershell
 cd claude_code_mcp_trading
 ```
 
 ### 2. Run the Automated Setup (Initial Setup Only)
-Open a PowerShell terminal in the project directory and run:
 ```powershell
 .\setup.ps1
 ```
