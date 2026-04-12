@@ -56,6 +56,12 @@ cd claude_code_mcp_trading
 ```powershell
 .\setup.ps1
 ```
+
+### 3. start claude code with mcp servers (test with /mcp the connection between claude and mcp servers)
+```bash
+Just doubleclick the "start-trading.bat" file to start & chat
+````
+
 The setup script will:
 - 📦 **Dependencies**: Automatically install missing Node.js, Python, and package libraries.
 - 🔍 **TradingView**: Automatically find your TradingView installation (Microsoft Store, Portable, or Desktop).
