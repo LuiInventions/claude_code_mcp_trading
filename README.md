@@ -39,7 +39,7 @@ Setup is automated. You only need to run the setup script **once** (or whenever 
 ```bash
 git clone https://github.com/LuiInventions/claude_code_mcp_trading
 ```
-##ä Go to main Folder
+### Go to main Folder
 ```bash
 cd claude_code_mcp_trading
 ```
