@@ -7,10 +7,56 @@ Write-Host "--- Bit Unix Trading MCP Setup ---" -ForegroundColor Cyan
 
 # 1. Check for Dependencies
 Write-Host "`n[1/5] Checking dependencies..." -ForegroundColor Yellow
-$node = Get-Command node -ErrorAction SilentlyContinue
-$python = Get-Command python -ErrorAction SilentlyContinue
-if (!$node) { Write-Error "Node.js is not installed or not in PATH." }
-if (!$python) { Write-Host "Warning: 'python' command not found. Searching for 'py' or 'python3'..." -ForegroundColor Gray }
+
+function Install-SystemDependency {
+    param([string]$Name, [string]$Id, [string]$Command)
+    
+    if (!(Get-Command $Command -ErrorAction SilentlyContinue)) {
+        Write-Host "$Name not found." -ForegroundColor Magenta
+        $choice = Read-Host "Would you like to install $Name via winget? (y/n) [y]"
+        if ($choice -eq "" -or $choice -eq "y") {
+            winget install --id $Id --silent --accept-package-agreements --accept-source-agreements
+            if ($LASTEXITCODE -eq 0) {
+                Write-Host "$Name installation started successfully. You may need to restart the terminal after it finishes." -ForegroundColor Green
+            } else {
+                Write-Host "Failed to install $Name via winget. Please install it manually from the official website." -ForegroundColor Red
+            }
+        }
+    } else {
+        Write-Host "Found $Name: $(Get-Command $Command | Select-Object -ExpandProperty Source)" -ForegroundColor Gray
+    }
+}
+
+# Check System Dependencies
+Install-SystemDependency -Name "Node.js" -Id "OpenJS.NodeJS" -Command "node"
+Install-SystemDependency -Name "Python" -Id "Python.Python.3" -Command "python"
+
+# Check Project Dependencies (Node.js)
+$tvMcpDir = "tradingview-mcp-jackson"
+if (Test-Path $tvMcpDir) {
+    if (!(Test-Path "$tvMcpDir\node_modules")) {
+        Write-Host "`nNode.js modules missing for TradingView MCP." -ForegroundColor Magenta
+        $choice = Read-Host "Run 'npm install' now? (y/n) [y]"
+        if ($choice -eq "" -or $choice -eq "y") {
+            Push-Location $tvMcpDir
+            npm install
+            Pop-Location
+        }
+    }
+}
+
+# Check Project Dependencies (Python)
+$bitunixDir = "Bitunix-trading-mcp"
+if (Test-Path $bitunixDir) {
+    $reqFile = "$bitunixDir\requirements.txt"
+    if (Test-Path $reqFile) {
+        Write-Host "`nChecking Python packages for BitUnix MCP..." -ForegroundColor Yellow
+        $choice = Read-Host "Install/Update Python dependencies from requirements.txt? (y/n) [y]"
+        if ($choice -eq "" -or $choice -eq "y") {
+            python -m pip install -r $reqFile
+        }
+    }
+}
 
 # 2. Search for TradingView
 Write-Host "`n[2/5] Searching for TradingView Desktop..." -ForegroundColor Yellow
