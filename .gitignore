@@ -14,3 +14,4 @@ __pycache__/
 *.log
 safety-check-log.json
 scratch/
+.claude/
