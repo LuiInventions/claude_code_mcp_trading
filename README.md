@@ -33,6 +33,8 @@ This suite transforms Claude from a coding assistant into a professional trading
 
 ## 🚀 Installation & Setup
 
+### 1. Setup
+
 Log in to your BitUnix account and go to: https://www.bitunix.com/account/apiManagement
 to get your api key, so the agent can acces your trading account
 
@@ -41,7 +43,7 @@ to analyze charts and use strategies
 
 ### Open a PowerShell terminal in the project directory and run:
 
-### 1. Clone the Suite
+### 2. Clone the Suite
 ```powershell
 git clone https://github.com/LuiInventions/claude_code_mcp_trading
 ```
@@ -50,7 +52,7 @@ Go to main Folder
 cd claude_code_mcp_trading
 ```
 
-### 2. Run the Automated Setup (Initial Setup Only)
+### 3. Run the Automated Setup (Initial Setup Only)
 ```powershell
 .\setup.ps1
 ```
@@ -59,26 +61,6 @@ The setup script will:
 - 🔍 **TradingView**: Automatically find your TradingView installation (Microsoft Store, Portable, or Desktop).
 - 🔑 **API Keys**: Prompt you for your BitUnix API Keys and save them securely to `.env`.
 - 🛠️ **Launcher**: Generate your personalized `start-trading.bat` file.
-
-### 3. Connect to Claude Code
-Add the suite to your Claude Code configuration (`.mcp.json`):
-
-```json
-{
-  "mcpServers": {
-    "tradingview": {
-      "command": "node",
-      "args": ["./tradingview-mcp-jackson/src/server.js"]
-    },
-    "bitunix": {
-      "command": "node",
-      "args": ["./Bitunix-trading-mcp/index.js"]
-    }
-  }
-}
-```
-
----
 
 ## 🔄 Daily Workflow
 
