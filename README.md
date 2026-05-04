@@ -1,91 +1,115 @@
 # 🚀 Claude Trading Suite
 
-Welcome to the **Claude Trading Suite** — a powerful, AI-driven trading environment that connects **Claude Code** directly to your **TradingView Desktop** and **BitUnix Exchange**. 
+<div align="center">
 
-This suite transforms Claude from a coding assistant into a professional trading partner that can analyze charts, manage watchlists, and execute orders with human-like reasoning and machine precision.
+[![Stars](https://img.shields.io/github/stars/LuiInventions/claude_code_mcp_trading?style=for-the-badge&color=yellow)](https://github.com/LuiInventions/claude_code_mcp_trading/stargazers)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![JavaScript](https://img.shields.io/badge/JavaScript-Node.js-F7DF1E?style=for-the-badge&logo=javascript)](https://nodejs.org)
+[![Python](https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python)](https://python.org)
+[![Claude](https://img.shields.io/badge/Powered%20by-Claude%20Code-orange?style=for-the-badge)](https://claude.ai/code)
+
+**Give Claude Code access to your TradingView charts and BitUnix exchange — and let it trade like a professional.**
+
+[🚀 Quick Start](#-installation--setup) · [✨ Features](#-features) · [📄 Daily Workflow](#-daily-workflow)
+
+> ⭐ **If this saves you time, please star the repo — it helps the project grow!**
+
+</div>
+
+---
+
+## 🤔 What Is This?
+
+The **Claude Trading Suite** connects **Claude Code** (Anthropic’s AI coding agent) directly to your **TradingView Desktop** and **BitUnix Exchange** via the Model Context Protocol (MCP). Instead of hardcoded rules, Claude reads your actual charts, interprets indicators, and places real orders — with human-level reasoning.
+
+Think of it as hiring an AI trading assistant that actually sees what you see.
 
 ---
 
 ## ✨ Features
 
 ### 📊 Advanced Charting (via TradingView MCP)
-*   **Morning Brief**: Scan your entire watchlist and get a structured session bias in seconds.
-*   **Chart Intelligence**: Claude can "see" your indicators (RSI, Moving Averages, etc.) and read custom Pine Script labels/drawings.
-*   **Automation**: Multi-pane layout control, automated symbol switching, and screenshot analysis.
-*   **Replay Trading**: Practice your strategies with bar-by-bar historical replay.
+- **Morning Brief** — Scan your full watchlist and get a structured session bias in seconds
+- **Chart Intelligence** — Claude reads your RSI, MAs, and custom Pine Script labels/drawings
+- **Automation** — Multi-pane layout control, symbol switching, screenshot analysis
+- **Replay Trading** — Practice strategies with bar-by-bar historical replay
 
 ### 📈 Precision Execution (via BitUnix MCP)
-*   **Hedge Mode Trading**: Full support for simultaneous Long/Short positions.
-*   **Advanced TP/SL**: Precise protection logic with an internal "Cancel + Re-place" workaround for maximum reliability.
-*   **Smart Conversion**: Integrated tools to move and convert funds between Spot and Futures wallets (USDC ↔ USDT).
-*   **Batch Ordering**: Execute complex multi-order strategies in a single command.
+- **Hedge Mode** — Full support for simultaneous Long/Short positions
+- **Advanced TP/SL** — Reliable internal "Cancel + Re-place" workaround
+- **Smart Conversion** — Move and convert funds between Spot and Futures (USDC ↔ USDT)
+- **Batch Ordering** — Execute complex multi-order strategies in one command
 
 ---
 
 ## 🛠️ Prerequisites
 
-*   **Claude Code**: Must be installed globally (`npm install -g @anthropic-ai/claude-code`).
-*   **TradingView Desktop**: The official desktop app (required for CDP support).
-*   **Python 3.10+**: For the BitUnix core logic.
-*   **Node.js 18+**: For the MCP bridge architecture.
+| Requirement | Note |
+|-------------|------|
+| [Claude Code](https://claude.ai/code) | `npm install -g @anthropic-ai/claude-code` |
+| [TradingView Desktop](https://de.tradingview.com/desktop/) | Required for CDP/MCP chart access |
+| Python 3.10+ | For BitUnix core logic |
+| Node.js 18+ | For the MCP bridge |
 
 ---
 
 ## 🚀 Installation & Setup
 
-### 1. Setup
-
-Log in to your BitUnix account and go to: https://www.bitunix.com/account/apiManagement
-to get your api key, so the agent can acces your trading account
-
-Tradingview mcp uses your local Tradingview (install at: https://de.tradingview.com/desktop/)
-to analyze charts and use strategies
-
-### Open a PowerShell terminal in the project directory and run:
-
-### 2. Clone the Suite
+### 1. Clone the repository
 ```powershell
 git clone https://github.com/LuiInventions/claude_code_mcp_trading
-```
-Go to main Folder
-```powershell
 cd claude_code_mcp_trading
 ```
 
-### 3. Run the Automated Setup (Initial Setup Only)
+### 2. Run the automated setup (first time only)
 ```powershell
 .\setup.ps1
 ```
 
-### 3. start claude code with mcp servers (test with /mcp the connection between claude and mcp servers)
-```bash
-Just doubleclick the "start-trading.bat" file to start & chat
-````
+The script will:
+- 📦 Install missing Node.js, Python, and all package dependencies
+- 🔍 Detect your TradingView installation (Microsoft Store, Portable, or Desktop)
+- 🔑 Prompt for your [BitUnix API Keys](https://www.bitunix.com/account/apiManagement) and save to `.env`
+- 🛠️ Generate your personalized `start-trading.bat` launcher
 
-The setup script will:
-- 📦 **Dependencies**: Automatically install missing Node.js, Python, and package libraries.
-- 🔍 **TradingView**: Automatically find your TradingView installation (Microsoft Store, Portable, or Desktop).
-- 🔑 **API Keys**: Prompt you for your BitUnix API Keys and save them securely to `.env`.
-- 🛠️ **Launcher**: Generate your personalized `start-trading.bat` file.
+### 3. Start trading
+```
+Double-click: start-trading.bat
+```
 
-## 🔄 Daily Workflow
-
-1.  **Launch**: Run your generated `start-trading.bat`. This starts TradingView in debug mode and opens your BitUnix dashboard.
-2.  **Analyze**: Ask Claude: `"Run my morning brief and give me my session bias for BTC and ETH."`
-3.  **Execute**: Once you have your bias, ask: `"Place a long market order for BTC with 10x leverage and a 2% Stop Loss."`
+Test MCP connections anytime with `/mcp` inside Claude.
 
 ---
 
-## 📜 Credits & Disclaimer
+## 🔄 Daily Workflow
 
-### Credits
-*   **TradingView MCP Jackson**: The charting component is an improved fork of the original work by **[LewisWJackson](https://github.com/LewisWJackson/tradingview-mcp-jackson)**. This suite integrates his excellent work to provide professional-grade chart interaction.
-*   **BitUnix MCP**: Developed specifically for this suite to provide high-performance exchange connectivity.
+1. **Launch** — Run `start-trading.bat` (starts TradingView in debug mode + opens BitUnix)
+2. **Analyze** — *"Run my morning brief and give me session bias for BTC and ETH."*
+3. **Execute** — *"Place a long market order for BTC with 10x leverage and a 2% Stop Loss."*
 
-### Disclaimer
-**Use at your own risk.** Trading involves significant risk of loss. This software is for educational and research purposes. We are not responsible for any financial losses or account consequences. Always test strategies in a safe environment first.
+---
+
+## 📜 Credits
+
+- **TradingView MCP** — Improved fork of [LewisWJackson/tradingview-mcp-jackson](https://github.com/LewisWJackson/tradingview-mcp-jackson)
+- **BitUnix MCP** — Built specifically for this suite
+
+---
+
+## ⚠️ Disclaimer
+
+Trading involves significant risk of loss. This software is for educational and research purposes only. Always test in a safe environment first. Use at your own risk.
 
 ---
 
 ## 📄 License
+
 MIT
+
+---
+
+<div align="center">
+
+**Useful? Drop a ⭐ — takes 2 seconds and helps others find this project.**
+
+</div>
